@@ -11,32 +11,15 @@ SQL-generated patients, encounters, and diagnoses
 
 The bronze SQL creates 200 patients, 400 encounters, and 400 diagnoses. Patient and encounter IDs match across views. The pipeline does not read `/databricks-datasets`, a volume, or any pre-existing table. It creates the source records in the destination workspace when it runs.
 
-## Run it
+## Run it in the Databricks UI
 
-1. Clone this public repo on a computer with the Databricks CLI:
+1. In **Workspace**, create a **Git folder** from `https://github.com/andrewwj24/clarity-medallion-demo.git`. Databricks recognizes the `databricks.yml` file at the root as a bundle. A public repo can be cloned for reading without a GitHub credential.
+2. Choose an existing Unity Catalog catalog and schema. If you need a new schema, create one in **Catalog Explorer** first.
+3. In the Git folder, open `databricks.yml`. Under `variables`, change the `catalog` and `schema` **default** values to the names you chose, then save the file. The checked-in values, `main` and `clarity_medallion_demo`, are examples; each workspace can use its own values.
+4. Click the **Deployments** icon, select the `dev` target, click **Deploy**, and confirm. Databricks validates the bundle as part of deployment.
+5. In **Bundle resources**, click the **Run** (play) icon for **Clarity Medallion Demo**. After it completes, find the eight materialized views in your chosen catalog and schema in **Catalog Explorer**.
 
-   ```bash
-   git clone https://github.com/andrewwj24/clarity-medallion-demo.git
-   cd clarity-medallion-demo
-   ```
-
-2. Create the target schema once in a Databricks SQL editor (skip this if it already exists):
-
-   ```sql
-   CREATE SCHEMA IF NOT EXISTS main.clarity_medallion_demo;
-   ```
-
-3. Deploy and run the pipeline from this directory:
-
-   ```bash
-   databricks bundle validate -t dev --profile <profile>
-   databricks bundle deploy -t dev --profile <profile>
-   databricks bundle run clarity_medallion -t dev --profile <profile>
-   ```
-
-The pipeline writes to `main.clarity_medallion_demo` by default. For another catalog or schema, use those names in the `CREATE SCHEMA` statement and pass `--var 'catalog=<catalog>' --var 'schema=<schema>'` to each bundle command. No custom functions or source datasets are required.
-
-The local `git clone` and bundle commands do not require a Databricks Git folder. Databricks also supports cloning a public repo into a Git folder without Git credentials. If the Git folder dialog selects an expired linked GitHub credential, deselect it for an anonymous clone or relink it using **View/edit your Git credentials**. Git credentials are needed to push changes back to GitHub. See [Databricks Git integration](https://docs.databricks.com/aws/en/repos/repos-setup).
+The pipeline generates its own synthetic source records. No file upload, custom function, or command-line setup is needed. See [Databricks' workspace bundle instructions](https://docs.databricks.com/aws/en/dev-tools/bundles/workspace-deploy) for screenshots of the Deployments and Bundle resources controls.
 
 ## What generated the initial data?
 
