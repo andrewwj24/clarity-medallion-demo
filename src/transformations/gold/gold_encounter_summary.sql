@@ -1,15 +1,14 @@
 -- ============================================================================
--- Gold Layer: Encounter Summary (Unmasked)
+-- Gold Layer: Encounter Summary
 -- Enriched encounter-level view with patient demographics and clinical metrics.
--- Includes PHI columns in cleartext — toggle with gold_encounter_summary_masked
--- to demonstrate Databricks column-level governance during the demo.
+-- All patient-like values in this demo are synthetic.
 --
 -- For aggregate analytics (monthly volume, avg LOS, avg charges by encounter
 -- type), layer a simple GROUP BY on top of this table.
 -- ============================================================================
 
 CREATE OR REFRESH MATERIALIZED VIEW gold_encounter_summary
-COMMENT 'Encounter summary with clinical metrics and patient demographics (unmasked)'
+COMMENT 'Encounter summary with clinical metrics and synthetic patient demographics'
 CLUSTER BY (year_month, encounter_type)
 AS
 SELECT

@@ -9,7 +9,7 @@ variables:
     description: Existing Unity Catalog catalog for the demo
     default: main
   schema:
-    description: Schema for the demo tables and mask functions
+    description: Existing schema for the demo tables
     default: clarity_medallion_demo
 
 targets:

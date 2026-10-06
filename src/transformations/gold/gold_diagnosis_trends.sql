@@ -1,15 +1,14 @@
 -- ============================================================================
--- Gold Layer: Diagnosis Trends (Unmasked)
+-- Gold Layer: Diagnosis Trends
 -- Enriched diagnosis-level view joining to silver_patients for demographics.
--- Includes PHI columns in cleartext — toggle with gold_diagnosis_trends_masked
--- to demonstrate column-level governance.
+-- All patient-like values in this demo are synthetic.
 --
 -- For aggregate analytics (monthly diagnosis counts, top diagnoses by volume),
 -- layer a simple GROUP BY on top of this table.
 -- ============================================================================
 
 CREATE OR REFRESH MATERIALIZED VIEW gold_diagnosis_trends
-COMMENT 'Diagnosis trends with patient demographics (unmasked)'
+COMMENT 'Diagnosis trends with synthetic patient demographics'
 CLUSTER BY (year_month, diagnosis_name)
 AS
 SELECT
