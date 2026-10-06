@@ -1,0 +1,18 @@
+bundle:
+  name: clarity_medallion_demo
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Existing Unity Catalog catalog for the demo
+    default: main
+  schema:
+    description: Schema for the demo tables and mask functions
+    default: clarity_medallion_demo
+
+targets:
+  dev:
+    default: true
+    mode: development
